@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TimeUp</title>
+
+    <script type="module" src="timeup.js"></script>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <ul class="runtime__container">
+        <ul class="hidden years__container">
+          <li class="time years">0</li>
+          <li class="time__text">year</li>
+        </ul>
+        <ul class="hidden days__container">
+          <li class="time days">0</li>
+          <li class="time__text">day</li>
+        </ul>
+        <ul class="hidden hours__container">
+          <li class="time hours">0</li>
+          <li class="time__text">hour</li>
+        </ul>
+        <li class="hidden colon">:</li>
+        <ul class="hidden min__container">
+          <li class="time min">0</li>
+          <li class="time__text">min</li>
+        </ul>
+      </ul>
+      <form class="search__container">
+        <input
+          type="string"
+          class="search__bar"
+          placeholder="Search..."
+        /><button class="search__btn">Search</button>
+      </form>
+      <span class="profile__box">
+        <h1 class="profile">
+          <p class="profile__name"></p>
+          <img class="btn profile__btn" src="./imgs/profilepic.png" />
+          <!-- <input
+            type="image"
+            src="./imgs/profilepic.png"
+            class="btn profile__btn"
+          /> -->
+        </h1>
+        <ul>
+          <li class="hidden settings">
+            <button class="btn settings__btn">Settings</button>
+          </li>
+          <li class="hidden login">
+            <button class="btn login__btn">Login</button>
+          </li>
+        </ul>
+      </span>
+    </header>
+    <div class="hidden login__container">
+      <h1 class="login__title">Login</h1>
+
+      <form class="login__form">
+        <label for="username">Username:</label>
+        <input
+          class="username__input"
+          type="text"
+          name="username"
+          placeholder="Type username here."
+        />
+
+        <label for="password">Password:</label>
+        <input
+          class="password__input"
+          type="text"
+          name="password"
+          placeholder="Type password here."
+        />
+        <input type="submit" class="btn submit__btn" />
+      </form>
+    </div>
+
+    <section class="movie__searches__container"></section>
+  </body>
+</html>
