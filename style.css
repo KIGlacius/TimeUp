@@ -161,11 +161,11 @@ input[type='submit'] {
   cursor: pointer;
 }
 
-.movie__poster:hover {
+/* .movie__poster:hover {
   width: 200px;
   height: 250px;
   transition: 0.2s;
-}
+} */
 .render__movie {
   display: flex;
   flex-direction: column;

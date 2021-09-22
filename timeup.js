@@ -1,5 +1,5 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+// import 'core-js/stable';
+// import 'regenerator-runtime/runtime';
 
 // sample account information
 
@@ -16,7 +16,6 @@ const accounts = [account1, account2];
 //------------------------------------------------------------------------------------------
 
 // Selector variables
-const profileBtn = document.querySelector('.profile__btn');
 const searchBar = document.querySelector('.search__bar');
 const header = document.querySelector('.header');
 const login = document.querySelector('.login');
@@ -26,7 +25,6 @@ const profileBox = document.querySelector('.profile__box');
 const profileName = document.querySelector('.profile__name');
 const btns = document.querySelectorAll('.btn');
 const loginContainer = document.querySelector('.login__container');
-const body = document.querySelector('body');
 const usernameInput = document.querySelector('.username__input');
 const passwordInput = document.querySelector('.password__input');
 const submitBtn = document.querySelector('.submit__btn');
@@ -34,7 +32,6 @@ const timeUpLogo = document.querySelector('.timeup__logo');
 const searchContainer = document.querySelector('.search__container');
 const moviesContainer = document.querySelector('.movie__searches__container');
 const runtimeContainer = document.querySelector('.runtime__container');
-const timeMin = document.querySelector('.min');
 
 let accountName;
 let runtimeTotal = 0;
@@ -73,6 +70,26 @@ const checkHidden = function () {
     }
   });
 };
+
+const checkTimePlurality = function () {
+  const timeYears = document.querySelector('.years');
+  const timeDays = document.querySelector('.days');
+  const timeHours = document.querySelector('.hours');
+  const timeMin = document.querySelector('.min');
+  const yearsContainer = document.querySelector('.years__container');
+  const daysContainer = document.querySelector('.days__container');
+  const hoursContainer = document.querySelector('.hours__container');
+  const minContainer = document.querySelector('.min__container');
+  yearsContainer.lastElementChild.textContent =
+    parseInt(timeYears.textContent) > 1 ? 'years' : 'year';
+  daysContainer.lastElementChild.textContent =
+    parseInt(timeDays.textContent) > 1 ? 'days' : 'day';
+  hoursContainer.lastElementChild.textContent =
+    parseInt(timeHours.textContent) > 1 ? 'hours' : 'hour';
+  minContainer.lastElementChild.textContent =
+    parseInt(timeMin.textContent) > 1 ? 'minutes' : 'minute';
+};
+
 const closeLoginContainer = function () {
   header.style.backgroundImage = "url('/imgs/header.png')";
   loginContainer.classList.add('hidden');
@@ -95,19 +112,24 @@ const fetchImdb = async function (imdb) {
 };
 
 const renderTime = function (parsedRuntime) {
+  const runtimeCounter = runtimeTotal / 60;
   const timeYears = document.querySelector('.years');
   const timeDays = document.querySelector('.days');
   const timeHours = document.querySelector('.hours');
   const timeMin = document.querySelector('.min');
-  const hoursContainer = document.querySelector('.hours__container');
-  const minContainer = document.querySelector('.min__container');
   runtimeTotal += parsedRuntime;
   timeHours.textContent = Math.trunc(runtimeTotal / 60) + ':';
   timeMin.textContent = runtimeTotal % 60;
-  hoursContainer.lastElementChild.textContent =
-    timeHours.textContent > '1' ? 'hours' : 'hour';
-  minContainer.lastElementChild.textContent =
-    timeHours.textContent > '1' ? 'minutes' : 'minute';
+  timeHours.textContent =
+    parseInt(timeHours.textContent) >= 24
+      ? Math.trunc(runtimeTotal / 60 / runtimeCounter) + ':'
+      : Math.trunc(runtimeTotal / 60) + ':';
+  timeDays.textContent =
+    Math.trunc(runtimeTotal / (60 * 24)) >= 365
+      ? parseInt(timeDays.textContent) - 365
+      : Math.trunc(runtimeTotal / (60 * 24));
+  timeYears.textContent = Math.trunc(runtimeTotal / (60 * 24 * 365));
+  checkTimePlurality();
   checkHidden();
 };
 const renderSearch = async function (data) {
