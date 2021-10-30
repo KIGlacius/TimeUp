@@ -2,9 +2,8 @@
   "name": "timeup",
   "version": "1.0.0",
   "description": "",
-  "main": "timeup.js",
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel -p 8888 index.html",
     "build": "parcel build index.html"
   },
   "author": "",

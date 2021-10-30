@@ -1,20 +1,3 @@
-// import 'core-js/stable';
-// import 'regenerator-runtime/runtime';
-
-// sample account information
-
-const account1 = {
-  username: 'KIGlacius',
-  password: '1234',
-};
-const account2 = {
-  username: 'vincenzorm117',
-  password: '4567',
-};
-
-const accounts = [account1, account2];
-//------------------------------------------------------------------------------------------
-
 // Selector variables
 const searchBar = document.querySelector('.search__bar');
 const header = document.querySelector('.header');
@@ -107,22 +90,22 @@ const search = async function () {
 const fetchImdb = async function (imdb) {
   const res = await fetch(`https://api.timeup.app/?i=${imdb}`);
   const data = await res.json();
-  const parsedRuntime = await parseInt(data.Runtime);
+  const parsedRuntime = parseInt(data.Runtime);
   renderTime(parsedRuntime);
 };
 
 const renderTime = function (parsedRuntime) {
-  const runtimeCounter = runtimeTotal / 60;
+  runtimeTotal += parsedRuntime;
+  const runtimeCounter = Math.trunc(runtimeTotal / (60 * 24));
   const timeYears = document.querySelector('.years');
   const timeDays = document.querySelector('.days');
   const timeHours = document.querySelector('.hours');
   const timeMin = document.querySelector('.min');
-  runtimeTotal += parsedRuntime;
   timeHours.textContent = Math.trunc(runtimeTotal / 60) + ':';
   timeMin.textContent = runtimeTotal % 60;
   timeHours.textContent =
     parseInt(timeHours.textContent) >= 24
-      ? Math.trunc(runtimeTotal / 60 / runtimeCounter) + ':'
+      ? Math.trunc(runtimeTotal / 60 - 24 * runtimeCounter) + ':'
       : Math.trunc(runtimeTotal / 60) + ':';
   timeDays.textContent =
     Math.trunc(runtimeTotal / (60 * 24)) >= 365
@@ -141,7 +124,7 @@ const renderSearch = async function (data) {
       moviesContainer.insertAdjacentHTML(
         'afterbegin',
         `<div class='render__movie'>
-        <image class='movie__poster' src=${movie.Poster}/>
+        <img class='movie__poster' src="${movie.Poster}" />
         ${movie.Title}
         </div>`
       );
@@ -150,53 +133,12 @@ const renderSearch = async function (data) {
   });
   moviesContainer.addEventListener('click', function (e) {
     searchArr.forEach(movie => {
-      if (movie.poster + '/' === e.target.src) {
+      if (movie.poster === e.target.src) {
         fetchImdb(movie.imdb);
       }
     });
   });
 };
-//------------------------------------------------------------------------------------------
-// Event handlers
-
-login.addEventListener('click', function () {});
-
-btns.forEach(el => {
-  let clicked = false;
-  el.addEventListener('click', function (e) {
-    if (el.className === 'btn profile__btn') {
-      clicked = !clicked;
-
-      if (clicked) {
-        profClickedOpen();
-      } else if (!clicked) {
-        profClickedClose();
-      }
-    }
-
-    if (el.className === 'btn login__btn') {
-      showLoginContainer();
-    }
-
-    if (el.className === 'btn submit__btn') {
-      e.preventDefault();
-      accountName = accounts.find(acc => acc.username === usernameInput.value);
-      console.log(accountName);
-
-      if (accountName && passwordInput.value === accountName.password) {
-        profileName.textContent = accountName.username;
-        loginBtn.setAttribute('class', 'btn logout__btn');
-        loginBtn.textContent = 'Logout';
-        closeLoginContainer();
-      } else {
-        submitBtn.insertAdjacentHTML(
-          `afterend`,
-          `Error: account username or password incorrect.`
-        );
-      }
-    }
-  });
-});
 
 searchContainer.addEventListener('submit', function (e) {
   e.preventDefault();
