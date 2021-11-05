@@ -109,8 +109,8 @@ const renderTime = function (parsedRuntime) {
       : Math.trunc(runtimeTotal / 60) + ':';
   timeDays.textContent =
     Math.trunc(runtimeTotal / (60 * 24)) >= 365
-      ? parseInt(timeDays.textContent) - 365
-      : Math.trunc(runtimeTotal / (60 * 24));
+      ? parseInt(timeDays.textContent) - 365 + ':'
+      : Math.trunc(runtimeTotal / (60 * 24)) + ':';
   timeYears.textContent = Math.trunc(runtimeTotal / (60 * 24 * 365));
   checkTimePlurality();
   checkHidden();
